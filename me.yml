@@ -1,0 +1,25 @@
+---
+- name: everything
+  hosts: all
+  tasks:
+  - name: dotfiles
+    action: copy src={{ item }} dest=/home/jasper/{{ item }} owner=jasper mode=0600
+    with_items:
+    - .jmacsrc
+    - .bashrc
+    - .multitailrc
+    - .zlogout
+    - .zshenv
+    - .zshrc
+    - .gitconfig
+  - name: make .ssh
+    file: path=/home/jasper/.ssh state=directory
+  - name: sshkey
+    action: copy src=.ssh/authorized_keys dest=/home/jasper/.ssh/authorized_keys owner=jasper mode=0600
+  - name: sshconfig (wheezy)
+    action: copy src=.ssh/config.wheezy dest=/home/jasper/.ssh/config owner=jasper mode=0600
+    when: ansible_distribution == 'Debian' and ansible_distribution_release == 'wheezy'
+  - name: sshconfig (jessie)
+    action: copy src=.ssh/config.jessie dest=/home/jasper/.ssh/config owner=jasper mode=0600
+    when: ansible_distribution == 'Debian' and ansible_distribution_release == 'jessie'
+...
