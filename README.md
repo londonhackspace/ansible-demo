@@ -2,7 +2,7 @@
 
 ## How to use
 
-- Copy to your home dir
+- Copy to your home dir on adminstuff (the playbook relies on the list of hosts in /etc/ansible/hosts)
 - edit it, at least change jasper everywhere to yourusername!
 - check that it's only trying to do the dot files you want.
 - run with:
